@@ -18,6 +18,11 @@ type (
 	_C_long_long int64
 )
 
+type KernelTimespec struct {
+	Sec  int64
+	Nsec int64
+}
+
 type ItimerSpec struct {
 	Interval Timespec
 	Value    Timespec
@@ -521,6 +526,15 @@ type TCPInfo struct {
 	Total_rto            uint16
 	Total_rto_recoveries uint16
 	Total_rto_time       uint32
+	Received_ce          uint32
+	Delivered_e1_bytes   uint32
+	Delivered_e0_bytes   uint32
+	Delivered_ce_bytes   uint32
+	Received_e1_bytes    uint32
+	Received_e0_bytes    uint32
+	Received_ce_bytes    uint32
+	Accecn_fail_mode     uint16
+	Accecn_opt_seen      uint16
 }
 
 type TCPVegasInfo struct {
@@ -586,7 +600,7 @@ const (
 	SizeofIPv6MTUInfo       = 0x20
 	SizeofICMPv6Filter      = 0x20
 	SizeofUcred             = 0xc
-	SizeofTCPInfo           = 0xf8
+	SizeofTCPInfo           = 0x118
 	SizeofTCPCCInfo         = 0x14
 	SizeofCanFilter         = 0x8
 	SizeofTCPRepairOpt      = 0x8
@@ -1324,7 +1338,7 @@ const (
 	PERF_RECORD_CGROUP                    = 0x13
 	PERF_RECORD_TEXT_POKE                 = 0x14
 	PERF_RECORD_AUX_OUTPUT_HW_ID          = 0x15
-	PERF_RECORD_MAX                       = 0x16
+	PERF_RECORD_MAX                       = 0x17
 	PERF_RECORD_KSYMBOL_TYPE_UNKNOWN      = 0x0
 	PERF_RECORD_KSYMBOL_TYPE_BPF          = 0x1
 	PERF_RECORD_KSYMBOL_TYPE_OOL          = 0x2
@@ -3566,7 +3580,7 @@ const (
 	DEVLINK_ATTR_LINECARD_SUPPORTED_TYPES              = 0xae
 	DEVLINK_ATTR_NESTED_DEVLINK                        = 0xaf
 	DEVLINK_ATTR_SELFTESTS                             = 0xb0
-	DEVLINK_ATTR_MAX                                   = 0xb3
+	DEVLINK_ATTR_MAX                                   = 0xb7
 	DEVLINK_DPIPE_FIELD_MAPPING_TYPE_NONE              = 0x0
 	DEVLINK_DPIPE_FIELD_MAPPING_TYPE_IFINDEX           = 0x1
 	DEVLINK_DPIPE_MATCH_TYPE_FIELD_EXACT               = 0x0
@@ -3888,7 +3902,7 @@ const (
 	ETHTOOL_MSG_PHY_GET                       = 0x2d
 	ETHTOOL_MSG_TSCONFIG_GET                  = 0x2e
 	ETHTOOL_MSG_TSCONFIG_SET                  = 0x2f
-	ETHTOOL_MSG_USER_MAX                      = 0x2f
+	ETHTOOL_MSG_USER_MAX                      = 0x33
 	ETHTOOL_MSG_KERNEL_NONE                   = 0x0
 	ETHTOOL_MSG_STRSET_GET_REPLY              = 0x1
 	ETHTOOL_MSG_LINKINFO_GET_REPLY            = 0x2
@@ -3938,7 +3952,7 @@ const (
 	ETHTOOL_MSG_PHY_NTF                       = 0x2e
 	ETHTOOL_MSG_TSCONFIG_GET_REPLY            = 0x2f
 	ETHTOOL_MSG_TSCONFIG_SET_REPLY            = 0x30
-	ETHTOOL_MSG_KERNEL_MAX                    = 0x30
+	ETHTOOL_MSG_KERNEL_MAX                    = 0x36
 	ETHTOOL_FLAG_COMPACT_BITSETS              = 0x1
 	ETHTOOL_FLAG_OMIT_REPLY                   = 0x2
 	ETHTOOL_FLAG_STATS                        = 0x4
@@ -4867,7 +4881,7 @@ const (
 	NL80211_ATTR_MAC_HINT                                   = 0xc8
 	NL80211_ATTR_MAC_MASK                                   = 0xd7
 	NL80211_ATTR_MAX_AP_ASSOC_STA                           = 0xca
-	NL80211_ATTR_MAX                                        = 0x151
+	NL80211_ATTR_MAX                                        = 0x159
 	NL80211_ATTR_MAX_CRIT_PROT_DURATION                     = 0xb4
 	NL80211_ATTR_MAX_CSA_COUNTERS                           = 0xce
 	NL80211_ATTR_MAX_HW_TIMESTAMP_PEERS                     = 0x143
@@ -5255,7 +5269,7 @@ const (
 	NL80211_CMD_LEAVE_MESH                                  = 0x45
 	NL80211_CMD_LEAVE_OCB                                   = 0x6d
 	NL80211_CMD_LINKS_REMOVED                               = 0x9a
-	NL80211_CMD_MAX                                         = 0x9d
+	NL80211_CMD_MAX                                         = 0x9f
 	NL80211_CMD_MICHAEL_MIC_FAILURE                         = 0x29
 	NL80211_CMD_MODIFY_LINK_STA                             = 0x97
 	NL80211_CMD_NAN_MATCH                                   = 0x78
@@ -5501,7 +5515,7 @@ const (
 	NL80211_FREQUENCY_ATTR_GO_CONCURRENT                    = 0xf
 	NL80211_FREQUENCY_ATTR_INDOOR_ONLY                      = 0xe
 	NL80211_FREQUENCY_ATTR_IR_CONCURRENT                    = 0xf
-	NL80211_FREQUENCY_ATTR_MAX                              = 0x22
+	NL80211_FREQUENCY_ATTR_MAX                              = 0x25
 	NL80211_FREQUENCY_ATTR_MAX_TX_POWER                     = 0x6
 	NL80211_FREQUENCY_ATTR_NO_10MHZ                         = 0x11
 	NL80211_FREQUENCY_ATTR_NO_160MHZ                        = 0xc
@@ -6167,7 +6181,7 @@ const (
 	NL80211_TXRATE_HT                                       = 0x2
 	NL80211_TXRATE_LEGACY                                   = 0x1
 	NL80211_TX_RATE_LIMITED                                 = 0x1
-	NL80211_TXRATE_MAX                                      = 0x7
+	NL80211_TXRATE_MAX                                      = 0xa
 	NL80211_TXRATE_MCS                                      = 0x2
 	NL80211_TXRATE_VHT                                      = 0x3
 	NL80211_UNSOL_BCAST_PROBE_RESP_ATTR_INT                 = 0x1
@@ -6183,7 +6197,7 @@ const (
 	NL80211_WIPHY_RADIO_ATTR_FREQ_RANGE                     = 0x2
 	NL80211_WIPHY_RADIO_ATTR_INDEX                          = 0x1
 	NL80211_WIPHY_RADIO_ATTR_INTERFACE_COMBINATION          = 0x3
-	NL80211_WIPHY_RADIO_ATTR_MAX                            = 0x4
+	NL80211_WIPHY_RADIO_ATTR_MAX                            = 0x5
 	NL80211_WIPHY_RADIO_FREQ_ATTR_END                       = 0x2
 	NL80211_WIPHY_RADIO_FREQ_ATTR_MAX                       = 0x2
 	NL80211_WIPHY_RADIO_FREQ_ATTR_START                     = 0x1

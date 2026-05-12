@@ -158,6 +158,7 @@ const (
 	NL3                              = 0x300
 	NLDLY                            = 0x300
 	NOFLSH                           = 0x80000000
+	NS_GET_ID                        = 0x4008b70d
 	NS_GET_MNTNS_ID                  = 0x4008b705
 	NS_GET_NSTYPE                    = 0x2000b703
 	NS_GET_OWNER_UID                 = 0x2000b704
@@ -359,6 +360,7 @@ const (
 	RTC_WKALM_SET                    = 0x8028700f
 	SCM_DEVMEM_DMABUF                = 0x4f
 	SCM_DEVMEM_LINEAR                = 0x4e
+	SCM_INQ                          = 0x54
 	SCM_TIMESTAMPING                 = 0x25
 	SCM_TIMESTAMPING_OPT_STATS       = 0x36
 	SCM_TIMESTAMPING_PKTINFO         = 0x3a
@@ -406,6 +408,7 @@ const (
 	SO_ERROR                         = 0x4
 	SO_INCOMING_CPU                  = 0x31
 	SO_INCOMING_NAPI_ID              = 0x38
+	SO_INQ                           = 0x54
 	SO_KEEPALIVE                     = 0x9
 	SO_LINGER                        = 0xd
 	SO_LOCK_FILTER                   = 0x2c
