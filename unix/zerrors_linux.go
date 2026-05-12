@@ -2811,6 +2811,7 @@ const (
 	PR_FP_MODE_FR                               = 0x1
 	PR_FP_MODE_FRE                              = 0x2
 	PR_FUTEX_HASH                               = 0x4e
+	PR_FUTEX_HASH_GET_IMMUTABLE                 = 0x3
 	PR_FUTEX_HASH_GET_SLOTS                     = 0x2
 	PR_FUTEX_HASH_SET_SLOTS                     = 0x1
 	PR_GET_AUXV                                 = 0x41555856
